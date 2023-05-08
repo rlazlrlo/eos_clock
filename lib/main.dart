@@ -34,35 +34,23 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "EOS Clock",
-        theme: ThemeData(primarySwatch: Colors.lightGreen, fontFamily: 'Teko'),
-        home: MyHomePage()
-    );
-  }
-
-  void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+/*
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
           primarySwatch: ColorService.createMaterialColor(Color(0xFF1CAF49))),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => LoginScreen(),
-          '/home': (context) => HomeScreen(),
-          '/signup': (context) => SignupScreen(),
-        },
-      ),
-    );
-  }
-}
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/home': (context) => HomeScreen(),
+        '/signup': (context) => SignupScreen(),
+      },
+    ),
+  );*/
+// }
