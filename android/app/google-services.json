@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1019400989277",
+    "project_id": "eos-clock-931c3",
+    "storage_bucket": "eos-clock-931c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019400989277:android:46a2e08f18a07dac1bfbb4",
+        "android_client_info": {
+          "package_name": "com.example.eos_clock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019400989277-3cikq3u79rriig1lt8rtdrjhs7coerna.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyConZ_K1hlnU7fp9-HA6dM9e_RcbasP1Ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019400989277-3cikq3u79rriig1lt8rtdrjhs7coerna.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1019400989277-b07fgu01i7317kdeg1iu4bgkm7g454kp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eosClock.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
