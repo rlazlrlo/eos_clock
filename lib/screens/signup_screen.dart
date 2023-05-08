@@ -119,15 +119,16 @@ class _SignupScreenState extends State<SignupScreen> {
         });
         // _auth.currentUser?.sendEmailVerification();
       } on FirebaseAuthException catch (e) {
-        //print(e);
+        print(e.code);
+        var errorCode = e.message.toString().split('(')[1].split(')')[0].split('/')[1];
         String message = '';
 
-        if (e.code == 'weak-password') {
+        if (errorCode == 'weak-password') {
           message = '취약한 비밀번호입니다. ';
-        } else if (e.code == 'email-already-in-use') {
+        } else if (errorCode == 'email-already-in-use') {
           message = '이미 사용중인 이메일입니다.';
         } else {
-          message = e.code;
+          message = errorCode;
         }
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -22,7 +22,7 @@ class _ClockWidgetState extends State<ClockWidget> {
       setState(() {
         DateTime now = DateTime.now();
         formattedTime = DateFormat('h:mm:ss a').format(now);
-        formattedDate = DateFormat('yyyy.MM.dd EEEE').format(now);
+        formattedDate = DateFormat('yyyy.MM.dd EEE').format(now);
       });
     });
   }
@@ -37,8 +37,8 @@ class _ClockWidgetState extends State<ClockWidget> {
     return Column(
       children: [
         Text(formattedTime,
-          style: TextStyle(color: Colors.black, fontSize: 65, height: 1)),
-        Text(formattedDate, style: TextStyle(color: Colors.grey, fontSize: 30, height: 1))
+          style: TextStyle(color: Colors.black, fontSize: 65, height: 1, fontFamily: 'Teko')),
+        Text(formattedDate, style: TextStyle(color: Colors.grey, fontSize: 30, height: 1, fontFamily: 'Teko'))
       ],
     );
   }

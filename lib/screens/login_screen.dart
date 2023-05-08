@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:eos_clock/screens/home_screen.dart';
 import 'package:eos_clock/screens/my_home_page.dart';
 import 'package:eos_clock/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -115,16 +118,24 @@ class _LoginScreenState extends State<LoginScreen> {
         await _auth.signInWithEmailAndPassword(
             email: _emailController.text, password: _passwordController.text);
 
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MyHomePage()),
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()),
                 (route) => false);
       } on FirebaseAuthException catch (e) {
+        // log(e as String);
+        log(e.code);
+        print(e);
+        print(e.code);
+        print(e.message);
+        print(e.message.toString().split('(')[1].split(')')[0].split('/')[1]);
+        var errorCode = e.message.toString().split('(')[1].split(')')[0].split('/')[1];
         String message = '';
 
-        if (e.code == 'user-not-found') {
+        if (errorCode == 'user-not-found') {
           message = '사용자가 존재하지 않습니다.';
-        } else if (e.code == 'wrong-password') {
+          print(message);
+        } else if (errorCode == 'wrong-password') {
           message = '비밀번호를 확인하세요.';
-        } else if (e.code == 'invalid-email') {
+        } else if (errorCode == 'invalid-email') {
           message = '이메일을 확인하세요.';
         }
 

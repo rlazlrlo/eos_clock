@@ -3,6 +3,7 @@ import 'dart:js';
 import 'package:eos_clock/screens/login_screen.dart';
 import 'package:eos_clock/screens/my_home_page.dart';
 import 'package:eos_clock/screens/signup_screen.dart';
+import 'package:eos_clock/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ void main() async {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             //인증반은 토큰을 가졌다면
-            return MyHomePage();
+            return HomeScreen();
           }
           return LoginScreen();
         },
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => LoginScreen(),
-          '/home': (context) => MyHomePage(),
+          '/home': (context) => HomeScreen(),
           '/signup': (context) => SignupScreen(),
         },
       ),
