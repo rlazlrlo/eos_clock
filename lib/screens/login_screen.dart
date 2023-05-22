@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text('회원 가입')),
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return SignUpScreen();
+                      return SignupScreen();
                     }));
                   })
               ]
