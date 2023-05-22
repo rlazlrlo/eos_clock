@@ -1,174 +1,20 @@
-// import 'dart:developer';
-//
-// import 'package:eos_clock/screens/home_screen.dart';
-// import 'package:eos_clock/screens/my_home_page.dart';
-// import 'package:eos_clock/screens/signup_screen.dart';
-// import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-//
-// class LoginScreen extends StatefulWidget {
-//   const LoginScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   State<LoginScreen> createState() => _LoginScreenState();
-// }
-//
-// class _LoginScreenState extends State<LoginScreen> {
-//   final _auth = FirebaseAuth.instance;
-//   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-//   final TextEditingController _emailController = TextEditingController();
-//   final TextEditingController _passwordController = TextEditingController();
-//
-//   Widget _userIdWidget() {
-//     return TextFormField(
-//       controller: _emailController,
-//       keyboardType: TextInputType.emailAddress,
-//       decoration: const InputDecoration(
-//         border: OutlineInputBorder(), labelText: 'email'),
-//       validator: (String? value) {
-//         if (value!.isEmpty) {
-//           return '이메일을 입력해주세요.';
-//         }
-//         return null;
-//       },
-//     );
-//   }
-//
-//   Widget _passwordWidget() {
-//     return TextFormField(
-//       controller: _passwordController,
-//       obscureText: true,
-//       keyboardType: TextInputType.text,
-//       decoration: const InputDecoration(
-//         border: OutlineInputBorder(), labelText: 'password'),
-//       validator: (String? value) {
-//         if (value!.isEmpty) {
-//           return '비밀번호를 입력해주세요.';
-//         }
-//         return null;
-//       },
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       resizeToAvoidBottomInset: false,
-//       backgroundColor: const Color(0xFFffffff),
-//       appBar: AppBar(
-//         title: const Text("로그인"),
-//         centerTitle: true,
-//       ),
-//       body: SafeArea(
-//         child: Form(
-//           key: _formKey,
-//           child: Padding(
-//             padding: const EdgeInsets.all(20.0),
-//             child: Column(
-//               children: [
-//                 _userIdWidget(),
-//                 const SizedBox(
-//                   height: 20.0,
-//                 ),
-//                 _passwordWidget(),
-//                 Container(
-//                   height: 50,
-//                   width: double.infinity,
-//                   margin: const EdgeInsets.only(top: 8.0),
-//                   child: ElevatedButton(
-//                     onPressed: () => _login(),
-//                     child: const Text('로그인'),
-//                   ),
-//                 ),
-//                 GestureDetector(
-//                   child: Container(
-//                     width: double.infinity,
-//                     alignment: AlignmentDirectional.center,
-//                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-//                     child: Text('회원 가입')),
-//                   onTap: () {
-//                     Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                       return SignupScreen();
-//                     }));
-//                   })
-//               ]
-//             )
-//           )
-//         )
-//       )
-//     );
-//   }
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//   }
-//   @override
-//   void dispose() {
-//     _emailController.dispose();
-//     _passwordController.dispose();
-//     super.dispose();
-//   }
-//
-//   _login() async {
-//     if (_formKey.currentState!.validate()) {
-//       FocusScope.of(context).requestFocus(FocusNode());
-//
-//       try {
-//         await _auth.signInWithEmailAndPassword(
-//             email: _emailController.text, password: _passwordController.text);
-//
-//         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()),
-//                 (route) => false);
-//       } on FirebaseAuthException catch (e) {
-//         // log(e as String);
-//         log(e.code);
-//         print(e);
-//         print(e.code);
-//         print(e.message);
-//         print(e.message.toString().split('(')[1].split(')')[0].split('/')[1]);
-//         var errorCode = e.message.toString().split('(')[1].split(')')[0].split('/')[1];
-//         String message = '';
-//
-//         if (errorCode == 'user-not-found') {
-//           message = '사용자가 존재하지 않습니다.';
-//           print(message);
-//         } else if (errorCode == 'wrong-password') {
-//           message = '비밀번호를 확인하세요.';
-//         } else if (errorCode == 'invalid-email') {
-//           message = '이메일을 확인하세요.';
-//         }
-//
-//         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//           content: Text(message),
-//           backgroundColor: Colors.deepOrange,
-//         ));
-//       }
-//     }
-//   }
-// }
-
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:eos_clock/screens/home_screen.dart';
 import 'package:eos_clock/screens/my_home_page.dart';
-import 'package:eos_clock/view/home_screen.dart';
-import 'package:eos_clock/view/signup_screen.dart';
+import 'package:eos_clock/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
-
-final String URL = "http://15.164.95.116:8000/";
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // firebase authentication instance 생성
+  final _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -178,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(
-          border: OutlineInputBorder(), labelText: 'email'),
+        border: OutlineInputBorder(), labelText: 'email'),
       validator: (String? value) {
         if (value!.isEmpty) {
           return '이메일을 입력해주세요.';
@@ -194,10 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: true,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
-          border: OutlineInputBorder(), labelText: 'password'),
+        border: OutlineInputBorder(), labelText: 'password'),
       validator: (String? value) {
         if (value!.isEmpty) {
-          // null or isEmpty
           return '비밀번호를 입력해주세요.';
         }
         return null;
@@ -215,49 +60,49 @@ class _LoginScreenState extends State<LoginScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-          child: Form(
-              key: _formKey,
-              child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      _userIdWidget(),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      _passwordWidget(),
-                      Container(
-                        height: 50,
-                        width: double.infinity,
-                        margin: const EdgeInsets.only(top: 8.0),
-                        child: ElevatedButton(
-                          onPressed: () => _login(),
-                          child: const Text("로그인"),
-                        ),
-                      ),
-                      GestureDetector(
-                          child: Container(
-                              width: double.infinity,
-                              alignment: AlignmentDirectional.center,
-                              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                              child: Text("회원 가입")),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                                  return signup_screen();
-                                }));
-                          })
-                    ],
-                  )))),
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                _userIdWidget(),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                _passwordWidget(),
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(top: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () => _login(),
+                    child: const Text('로그인'),
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    width: double.infinity,
+                    alignment: AlignmentDirectional.center,
+                    padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: Text('회원 가입')),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return SignUpScreen();
+                    }));
+                  })
+              ]
+            )
+          )
+        )
+      )
     );
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -266,40 +111,34 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _login() async {
-    // 키보드 숨기기
     if (_formKey.currentState!.validate()) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      String message = '';
+      try {
+        await _auth.signInWithEmailAndPassword(
+            email: _emailController.text, password: _passwordController.text);
 
-      final request = Uri.parse(URL + "user/login/" + _emailController.text);
-
-      Future<Map<String, String>> fetch() async {
-        print("here");
-        Map<String, String> header = {"password": _passwordController.text};
-        print("here1");
-        final response = await http.get(request, headers: header);
-        var decodedResult = jsonDecode(response.body) as Map<String, dynamic>;
-
-        var result =
-        decodedResult.map((key, value) => MapEntry(key, value.toString()));
-
-        return result;
-      }
-
-      var response = fetch();
-
-      message = await response.then((value) => value['result'].toString());
-
-      message =
-      await response.then((value) => value["error_message"].toString());
-
-      if (message == 'login success') {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen()),
                 (route) => false);
-      } else {
+      } on FirebaseAuthException catch (e) {
+        // log(e as String);
+        log(e.code);
+        print(e);
+        print(e.code);
+        print(e.message);
+        print(e.message.toString().split('(')[1].split(')')[0].split('/')[1]);
+        var errorCode = e.message.toString().split('(')[1].split(')')[0].split('/')[1];
+        String message = '';
+
+        if (errorCode == 'user-not-found') {
+          message = '사용자가 존재하지 않습니다.';
+          print(message);
+        } else if (errorCode == 'wrong-password') {
+          message = '비밀번호를 확인하세요.';
+        } else if (errorCode == 'invalid-email') {
+          message = '이메일을 확인하세요.';
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(message),
           backgroundColor: Colors.deepOrange,
